@@ -67,24 +67,24 @@ const storeCategoryGroups = {
 };
 
 Object.assign(storeCategoryMeta, {
-    nhanbac: { label: 'Nháº«n báº¡c', desc: 'Thanh lá»‹ch, nháº¹ nhÃ ng vÃ  dá»… Ä‘eo háº±ng ngÃ y.' },
-    nhanvang: { label: 'Nháº«n vÃ ng', desc: 'Sang trá»ng, ná»•i báº­t vÃ  bá»n Ä‘áº¹p.' },
-    nhanmoissanite: { label: 'Nháº«n moissanite', desc: 'Láº¥p lÃ¡nh hiá»‡n Ä‘áº¡i, phÃ¹ há»£p cho dá»‹p Ä‘áº·c biá»‡t.' },
-    nhandaquy: { label: 'Nháº«n Ä‘Ã¡ quÃ½', desc: 'TÃ´n lÃªn váº» quÃ½ phÃ¡i vÃ  cÃ¡ tÃ­nh riÃªng.' },
-    daychuyenbac: { label: 'DÃ¢y chuyá»n báº¡c', desc: 'Tinh táº¿, hiá»‡n Ä‘áº¡i vÃ  dá»… phá»‘i Ä‘á»“.' },
-    daychuyenvang: { label: 'DÃ¢y chuyá»n vÃ ng', desc: 'Sáº¯c vÃ ng ná»•i báº­t cho phong cÃ¡ch sang trá»ng.' },
-    vongtay: { label: 'VÃ²ng tay', desc: 'Thiáº¿t káº¿ thanh lá»‹ch cho nhiá»u dá»‹p sá»­ dá»¥ng.' },
-    'bongtai-dinhda': { label: 'BÃ´ng tai Ä‘Ã­nh Ä‘Ã¡', desc: 'Láº¥p lÃ¡nh vÃ  ná»•i báº­t trong tá»«ng chi tiáº¿t.' },
-    'bongtai-ngoctrai': { label: 'BÃ´ng tai ngá»c trai', desc: 'Tinh táº¿, cá»• Ä‘iá»ƒn vÃ  sang trá»ng.' },
-    'bongtai-toigian': { label: 'BÃ´ng tai tá»‘i giáº£n', desc: 'Nháº¹ nhÃ ng, tinh gá»n vÃ  dá»… Ä‘eo má»—i ngÃ y.' },
-    nhannam: { label: 'Nháº«n nam', desc: 'Kiá»ƒu dÃ¡ng nam tÃ­nh, báº£n lá»©nh vÃ  hiá»‡n Ä‘áº¡i.' },
-    daychuyennam: { label: 'DÃ¢y chuyá»n nam', desc: 'Tá»‘i giáº£n nhÆ°ng váº«n ná»•i báº­t.' },
-    lactaynam: { label: 'Láº¯c tay nam', desc: 'CÃ¡ tÃ­nh, khá»e khoáº¯n vÃ  dá»… phá»‘i phong cÃ¡ch.' },
-    nhancuoi: { label: 'Nháº«n cÆ°á»›i', desc: 'Thiáº¿t káº¿ Ã½ nghÄ©a cho hÃ nh trÃ¬nh gáº¯n káº¿t bá»n lÃ¢u.' },
-    nhancapdoi: { label: 'Nháº«n cáº·p Ä‘Ã´i', desc: 'MÃ³n quÃ  ngá»t ngÃ o cho hai ngÆ°á»i.' },
-    quatang: { label: 'QuÃ  táº·ng ká»· niá»‡m', desc: 'Trao gá»­i tÃ¬nh cáº£m qua nhá»¯ng mÃ³n quÃ  tinh táº¿.' },
-    hoptrangsuc: { label: 'Há»™p trang sá»©c', desc: 'Báº£o quáº£n sáº£n pháº©m gá»n gÃ ng vÃ  sang trá»ng.' },
-    khanlau: { label: 'KhÄƒn lau trang sá»©c', desc: 'GiÃºp trang sá»©c luÃ´n sÃ¡ng bÃ³ng vÃ  sáº¡ch Ä‘áº¹p.' }
+    nhanbac: { label: 'Nhan bac', desc: 'Thanh lich, nhe nhang va de deo hang ngay.' },
+    nhanvang: { label: 'Nhan vang', desc: 'Sang trong, noi bat va ben dep.' },
+    nhanmoissanite: { label: 'Nhan moissanite', desc: 'Lap lanh hien dai, phu hop cho dip dac biet.' },
+    nhandaquy: { label: 'Nhan da quy', desc: 'Ton len ve quy phai va ca tinh rieng.' },
+    daychuyenbac: { label: 'Day chuyen bac', desc: 'Tinh te, hien dai va de phoi do.' },
+    daychuyenvang: { label: 'Day chuyen vang', desc: 'Sac vang noi bat cho phong cach sang trong.' },
+    vongtay: { label: 'Vong tay', desc: 'Thiet ke thanh lich cho nhieu dip su dung.' },
+    'bongtai-dinhda': { label: 'Bong tai dinh da', desc: 'Lap lanh va noi bat trong tung chi tiet.' },
+    'bongtai-ngoctrai': { label: 'Bong tai ngoc trai', desc: 'Tinh te, co dien va sang trong.' },
+    'bongtai-toigian': { label: 'Bong tai toi gian', desc: 'Nhe nhang, tinh gon va de deo moi ngay.' },
+    nhannam: { label: 'Nhan nam', desc: 'Kieu dang nam tinh, ban linh va hien dai.' },
+    daychuyennam: { label: 'Day chuyen nam', desc: 'Toi gian nhung van noi bat.' },
+    lactaynam: { label: 'Lac tay nam', desc: 'Ca tinh, khoe khoan va de phoi phong cach.' },
+    nhancuoi: { label: 'Nhan cuoi', desc: 'Thiet ke y nghia cho hanh trinh gan ket ben lau.' },
+    nhancapdoi: { label: 'Nhan cap doi', desc: 'Mon qua ngot ngao cho hai nguoi.' },
+    quatang: { label: 'Qua tang ky niem', desc: 'Trao gui tinh cam qua nhung mon qua tinh te.' },
+    hoptrangsuc: { label: 'Hop trang suc', desc: 'Bao quan san pham gon gang va sang trong.' },
+    khanlau: { label: 'Khan lau trang suc', desc: 'Giup trang suc luon sang bong va sach dep.' }
 });
 
 storeCategoryGroups.nhan = ['nhan', 'nhanbac', 'nhanvang', 'nhanmoissanite', 'nhandaquy'];
@@ -473,7 +473,7 @@ function showDetail(id) {
     if (rowMag) rowMag.style.display = product.mag ? 'flex' : 'none';
     if (rowAmmo) rowAmmo.style.display = product.ammo ? 'flex' : 'none';
     if (rowAcc) rowAcc.style.display = product.acc ? 'flex' : 'none';
-    if (lblAcc) lblAcc.innerText = 'Äáº·c Ä‘iá»ƒm:';
+    if (lblAcc) lblAcc.innerText = 'Dac diem:';
     if (valMag) valMag.innerText = product.mag || '-';
     if (valAmmo) valAmmo.innerText = product.ammo || '-';
     if (valAcc) valAcc.innerText = product.acc || '-';

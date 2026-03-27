@@ -13,6 +13,17 @@ const productCategoryLabels = {
     phukien: 'Phụ kiện'
 };
 
+Object.assign(productCategoryLabels, {
+    nhan: 'Nhan',
+    daychuyen: 'Day chuyen',
+    lactay: 'Lac tay',
+    bongtai: 'Bong tai',
+    matday: 'Mat day',
+    trangsucnam: 'Trang suc nam',
+    trangsuccuoi: 'Trang suc cuoi',
+    phukien: 'Phu kien'
+});
+
 const reportChartPalette = [
     ['rgb(37, 99, 235)', 'rgb(56, 189, 248)'],
     ['rgb(34, 197, 94)', 'rgb(16, 185, 129)'],

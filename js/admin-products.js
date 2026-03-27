@@ -282,3 +282,202 @@ window.saveProduct = function() {
         renderAdminSuppliers(supSearch ? supSearch.value : '');
     }
 };
+
+window.deleteWeapon = function(id, btnElement) {
+    const confirmDelete = confirm('Xac nhan xoa san pham nay khoi danh muc?');
+    if (!confirmDelete) return;
+
+    const row = btnElement.closest('tr');
+    if (row) {
+        row.classList.add('fade-out-row');
+    }
+
+    setTimeout(() => {
+        const index = dbProducts.findIndex(p => p.id === id);
+        if (index > -1) {
+            dbProducts.splice(index, 1);
+            if (typeof persistProducts === 'function') persistProducts();
+            if (typeof hydrateCartFromStorage === 'function') hydrateCartFromStorage();
+            showToast('Da xoa san pham thanh cong!');
+
+            const adminSearchInput = document.getElementById('adminSearchInput');
+            const keyword = adminSearchInput ? adminSearchInput.value : '';
+            renderAdminProductTable(keyword);
+
+            renderProducts(typeof currentStoreCategory === 'string' ? currentStoreCategory : 'all');
+            renderTopSelling();
+            if (typeof renderSaleProducts === 'function') renderSaleProducts();
+            if (typeof renderOrderHistory === 'function') renderOrderHistory();
+            renderSidebar();
+
+            if (typeof renderAdminSuppliers === 'function') {
+                const supSearch = document.getElementById('adminSupplierSearchInput');
+                renderAdminSuppliers(supSearch ? supSearch.value : '');
+            }
+        }
+    }, 300);
+};
+
+window.toggleAdminFields = function() {
+    const cat = document.getElementById('formCategory').value;
+    const ammoGroup = document.getElementById('groupFormAmmo');
+    const magGroup = document.getElementById('groupFormMag');
+    const accGroup = document.getElementById('groupFormAcc');
+    const ammoLabel = ammoGroup ? ammoGroup.querySelector('label') : null;
+    const magLabel = magGroup ? magGroup.querySelector('label') : null;
+    const accLabel = document.getElementById('lblFormAcc');
+    const ammoInput = document.getElementById('formAmmo');
+    const magInput = document.getElementById('formMag');
+    const accInput = document.getElementById('formAcc');
+
+    if (ammoGroup) ammoGroup.style.display = 'flex';
+    if (magGroup) magGroup.style.display = 'flex';
+    if (accGroup) accGroup.style.display = 'flex';
+
+    if (magLabel) magLabel.innerText = 'KICH CO / SIZE';
+    if (ammoLabel) ammoLabel.innerText = 'CHAT LIEU';
+    if (magInput) magInput.placeholder = 'VD: Ni 7, 45cm, Free size...';
+    if (ammoInput) ammoInput.placeholder = 'VD: Bac 925, Vang 18K...';
+
+    if (['phukien', 'hoptrangsuc', 'khanlau'].includes(cat)) {
+        if (accLabel) accLabel.innerText = 'MO TA / CONG DUNG';
+        if (accInput) accInput.placeholder = 'VD: Lot nhung mem, lam sach be mat, bao quan trang suc...';
+        return;
+    }
+
+    if (accLabel) accLabel.innerText = 'DAC DIEM NOI BAT';
+    if (accInput) accInput.placeholder = 'VD: Dinh da CZ, khac ten, charm trai tim...';
+};
+
+window.openAddProductForm = function() {
+    document.getElementById('adminFormTitle').innerText = 'THEM SAN PHAM MOI';
+    document.getElementById('formSaveMode').value = 'add';
+
+    document.getElementById('formCategory').value = 'nhanbac';
+    document.getElementById('formId').value = '';
+    document.getElementById('formId').disabled = false;
+    document.getElementById('formName').value = '';
+    document.getElementById('formPrice').value = '';
+    document.getElementById('formStock').value = '';
+    document.getElementById('formAmmo').value = '';
+    document.getElementById('formMag').value = '';
+    document.getElementById('formAcc').value = '';
+    document.getElementById('formImg').value = '';
+
+    const supplierSelect = document.getElementById('formSupplier');
+    if (supplierSelect) {
+        const suppliers = JSON.parse(localStorage.getItem('supplierData')) || [];
+        supplierSelect.innerHTML = '<option value="">-- Khong co / Tu nhap --</option>' +
+            suppliers.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        supplierSelect.value = '';
+    }
+
+    window.toggleAdminFields();
+
+    const modal = document.getElementById('adminFormModal');
+    if (modal) modal.classList.remove('hide-menu');
+};
+
+window.saveProduct = function() {
+    const mode = document.getElementById('formSaveMode').value;
+    const subcategory = document.getElementById('formCategory').value;
+
+    let category = subcategory;
+    if (['nhanbac', 'nhanvang', 'nhanmoissanite', 'nhandaquy'].includes(subcategory)) category = 'nhan';
+    else if (['daychuyenbac', 'daychuyenvang', 'matday'].includes(subcategory)) category = 'daychuyen';
+    else if (['lactay', 'vongtay'].includes(subcategory)) category = 'lactay';
+    else if (subcategory.startsWith('bongtai')) category = 'bongtai';
+    else if (['nhannam', 'daychuyennam', 'lactaynam'].includes(subcategory)) category = 'trangsucnam';
+    else if (['nhancuoi', 'nhancapdoi', 'quatang'].includes(subcategory)) category = 'trangsuccuoi';
+    else if (['phukien', 'hoptrangsuc', 'khanlau'].includes(subcategory)) category = 'phukien';
+
+    const id = document.getElementById('formId').value.trim();
+    const name = document.getElementById('formName').value.trim();
+    const price = parseInt(document.getElementById('formPrice').value);
+    const stock = parseInt(document.getElementById('formStock').value);
+    const ammo = document.getElementById('formAmmo').value.trim();
+    const mag = document.getElementById('formMag').value.trim();
+    const acc = document.getElementById('formAcc').value.trim();
+    const img = document.getElementById('formImg').value.trim();
+    const supplierId = document.getElementById('formSupplier') ? document.getElementById('formSupplier').value : '';
+
+    if (!id || !name || isNaN(price) || isNaN(stock)) {
+        showToast('Loi: Can dien day du Ma SP, Ten, Gia va So hang!');
+        return;
+    }
+
+    if (price < 0 || stock < 0) {
+        showToast('Loi: Gia ban va so luong khong duoc am!');
+        return;
+    }
+
+    const normalizedId = id.toUpperCase();
+    const resolvedImg = img || (window.productFallbackImage || '../product-fallback.svg');
+
+    if (mode === 'add') {
+        const exist = dbProducts.find(p => p.id === normalizedId);
+        if (exist) {
+            showToast('Loi: Ma san pham nay da ton tai trong kho!');
+            return;
+        }
+
+        dbProducts.push({
+            id: normalizedId,
+            name,
+            category,
+            subcategory,
+            price,
+            stock,
+            ammo,
+            mag,
+            acc,
+            supplierId,
+            img: resolvedImg,
+            collection: 'Moi them',
+            tagline: 'San pham vua duoc admin cap nhat vao catalog storefront.',
+            salePercent: 0,
+            featured: false,
+            createdAt: new Date().toISOString()
+        });
+        showToast('Da nhap kho san pham moi thanh cong!');
+    } else {
+        const index = dbProducts.findIndex(p => p.id === normalizedId);
+        if (index > -1) {
+            dbProducts[index] = {
+                ...dbProducts[index],
+                id: normalizedId,
+                name,
+                category,
+                subcategory,
+                price,
+                stock,
+                ammo,
+                mag,
+                acc,
+                supplierId,
+                img: resolvedImg
+            };
+            showToast('Da cap nhat thong tin san pham thanh cong!');
+        }
+    }
+
+    if (typeof persistProducts === 'function') persistProducts();
+    if (typeof hydrateCartFromStorage === 'function') hydrateCartFromStorage();
+
+    closeAdminForm();
+
+    const adminSearchInput = document.getElementById('adminSearchInput');
+    const keyword = adminSearchInput ? adminSearchInput.value : '';
+    renderAdminProductTable(keyword, normalizedId);
+
+    renderProducts(typeof currentStoreCategory === 'string' ? currentStoreCategory : 'all');
+    renderTopSelling();
+    if (typeof renderSaleProducts === 'function') renderSaleProducts();
+    if (typeof renderOrderHistory === 'function') renderOrderHistory();
+    renderSidebar();
+
+    if (typeof renderAdminSuppliers === 'function') {
+        const supSearch = document.getElementById('adminSupplierSearchInput');
+        renderAdminSuppliers(supSearch ? supSearch.value : '');
+    }
+};

@@ -252,3 +252,69 @@ function registerModalDismiss() {
 
 injectModals();
 registerModalDismiss();
+
+function applyJewelryCategoryLabels() {
+    const magLabel = document.querySelector('#rowMdlMag .info-label');
+    const ammoLabel = document.querySelector('#rowMdlAmmo .info-label');
+    const accLabel = document.getElementById('lblMdlAcc');
+    const categorySelect = document.getElementById('formCategory');
+    const formId = document.getElementById('formId');
+    const formMagLabel = document.querySelector('#groupFormMag label');
+    const formAmmoLabel = document.querySelector('#groupFormAmmo label');
+    const formAccLabel = document.getElementById('lblFormAcc');
+    const formMag = document.getElementById('formMag');
+    const formAmmo = document.getElementById('formAmmo');
+    const formAcc = document.getElementById('formAcc');
+    if (magLabel) magLabel.innerText = 'Kich co:';
+    if (ammoLabel) ammoLabel.innerText = 'Chat lieu:';
+    if (accLabel) accLabel.innerText = 'Dac diem:';
+
+    if (categorySelect) {
+        categorySelect.innerHTML = `
+            <optgroup label="Nhan">
+                <option value="nhanbac">Nhan bac</option>
+                <option value="nhanvang">Nhan vang</option>
+                <option value="nhanmoissanite">Nhan moissanite</option>
+                <option value="nhandaquy">Nhan da quy</option>
+            </optgroup>
+            <optgroup label="Day chuyen">
+                <option value="daychuyenbac">Day chuyen bac</option>
+                <option value="daychuyenvang">Day chuyen vang</option>
+                <option value="matday">Mat day chuyen</option>
+            </optgroup>
+            <optgroup label="Lac tay">
+                <option value="lactay">Lac tay</option>
+                <option value="vongtay">Vong tay</option>
+            </optgroup>
+            <optgroup label="Bong tai">
+                <option value="bongtai-dinhda">Bong tai dinh da</option>
+                <option value="bongtai-ngoctrai">Bong tai ngoc trai</option>
+                <option value="bongtai-toigian">Bong tai toi gian</option>
+            </optgroup>
+            <optgroup label="Trang suc nam">
+                <option value="nhannam">Nhan nam</option>
+                <option value="daychuyennam">Day chuyen nam</option>
+                <option value="lactaynam">Lac tay nam</option>
+            </optgroup>
+            <optgroup label="Trang suc cuoi">
+                <option value="nhancuoi">Nhan cuoi</option>
+                <option value="nhancapdoi">Nhan cap doi</option>
+                <option value="quatang">Qua tang ky niem</option>
+            </optgroup>
+            <optgroup label="Phu kien">
+                <option value="hoptrangsuc">Hop trang suc</option>
+                <option value="khanlau">Khan lau trang suc</option>
+                <option value="phukien">Phu kien chung</option>
+            </optgroup>
+        `;
+    }
+
+    if (formId) formId.placeholder = 'VD: RING05, NEC02...';
+    if (formMagLabel) formMagLabel.innerText = 'Kich co / size';
+    if (formAmmoLabel) formAmmoLabel.innerText = 'Chat lieu';
+    if (formAccLabel) formAccLabel.innerText = 'Dac diem noi bat';
+    if (formMag) formMag.placeholder = 'VD: Ni 7, 45cm, Free size...';
+    if (formAmmo) formAmmo.placeholder = 'VD: Bac 925, Vang 18K...';
+    if (formAcc) formAcc.placeholder = 'VD: Dinh da CZ, khac ten, charm trai tim...';
+}
+applyJewelryCategoryLabels();
